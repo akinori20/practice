@@ -14,8 +14,9 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+
       - name: Lint Code
         uses: golangci/golangci-lint-action@v6
         with:
           version: v1.60
-          args: --out-format=github-actions
+          args: --out-format=github-actions,tab --new
