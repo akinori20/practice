@@ -1,6 +1,6 @@
-package main
+package lintfail
 
-func main() {
+func EmptyIf() {
     // 無意味な空のif文でlintエラー
     if true {
     }

@@ -1,10 +1,6 @@
-package main
+package lintfail
 
-func add(a int, b int) int {
+// コメントがないexported関数でlintエラー
+func Add(a int, b int) int {
     return a + b
 }
-
-func main() {
-    _ = add(1, 2)
-}
-// コメントがないexported関数でlintエラー
