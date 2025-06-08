@@ -1,22 +1,28 @@
-name: Go Lint
+name: Go Lint with reviewdog 🐶🌈
 
 on:
-  push:
-    paths:
-      - '**.go'
   pull_request:
     paths:
       - '**.go'
 
 jobs:
-  lint:
+  golangci-lint:
+    name: runner / golangci-lint
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Lint Code
-        uses: golangci/golangci-lint-action@v6
+      - name: Set up Go
+        uses: actions/setup-go@v5
         with:
-          version: v1.60
-          args: --out-format=github-actions,tab --new
+          go-version: '1.22'  # お好みで調整
+
+      - name: Run golangci-lint with reviewdog
+        uses: reviewdog/action-golangci-lint@v2
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          golangci_lint_version: v1.60.3
+          reporter: github-pr-review # コメントで表示
+          fail_on_error: true         # Lintエラーでジョブ失敗
+          filter_mode: diff_context   # 差分だけ表示
