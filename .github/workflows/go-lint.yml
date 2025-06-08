@@ -7,22 +7,18 @@ on:
 
 jobs:
   golangci-lint:
-    name: runner / golangci-lint
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      - name: Set up Go
-        uses: actions/setup-go@v5
+      - uses: actions/setup-go@v5
         with:
-          go-version: '1.22'  # お好みで調整
+          go-version: '1.22'
 
-      - name: Run golangci-lint with reviewdog
-        uses: reviewdog/action-golangci-lint@v2
+      - uses: reviewdog/action-golangci-lint@v2
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           golangci_lint_version: v1.60.3
-          reporter: github-pr-review # コメントで表示
-          fail_on_error: true         # Lintエラーでジョブ失敗
-          filter_mode: diff_context   # 差分だけ表示
+          reporter: github-check              # ← これに変更
+          filter_mode: diff_context
+          fail_level: error                   # ← fail_on_error は非推奨
