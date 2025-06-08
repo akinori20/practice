@@ -1,7 +1,7 @@
 name: Go Lint with reviewdog 🐶🌈
 
 on:
-  pull_request_target:  # ← 権限を有効化
+  pull_request:  # ← 標準のPRイベントに変更
     paths:
       - '**.go'
 
@@ -11,19 +11,17 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-        with:
-          ref: ${{ github.event.pull_request.head.ref }}  # ← PRの変更を取得するために明示
 
       - name: Set up Go
         uses: actions/setup-go@v5
         with:
           go-version: '1.22'
 
-      - name: Run golangci-lint with reviewdog (PRコメント用)
+      - name: Run golangci-lint with reviewdog (GitHub Checks表示)
         uses: reviewdog/action-golangci-lint@v2
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           golangci_lint_version: v1.60.3
-          reporter: github-pr-review       # ← コメント表示モード
+          reporter: github-check            # ← コメントでなく Checks に出す
           filter_mode: diff_context
-          fail_level: error                # CI失敗ライン
+          fail_level: error
