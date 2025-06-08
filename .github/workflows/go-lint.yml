@@ -1,13 +1,3 @@
-# Go Linter Check with GitHub Actions
-
-This workflow will run Go linter checks on your repository using [golangci-lint](https://github.com/golangci/golangci-lint).
-
-## Usage
-- Place your Go code in this repository.
-- The workflow will run on every push and pull request.
-
----
-
 name: Go Lint
 
 on:
